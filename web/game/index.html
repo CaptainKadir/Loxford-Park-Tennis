@@ -166,6 +166,11 @@
   #titlescene { position: fixed; inset: 0; width: 100vw; height: 100vh; object-fit: cover; image-rendering: pixelated; display: none; z-index: 1; }
   #menu.title { background: radial-gradient(75% 60% at 50% 42%, rgba(var(--ink),.74), rgba(var(--ink),.3)); }
   #menu.title::before { backdrop-filter: none; }
+  /* the "made by" stamp on the title page: an ink-stamp look, tilted, in the bottom-right corner above the key hints */
+  .stamp { position: fixed; right: clamp(14px, 4vw, 56px); bottom: clamp(56px, 11vh, 110px); transform: rotate(-9deg); display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 7px 16px 8px; border: 3px double #ff7a59; border-radius: 8px; color: #ff7a59; text-transform: uppercase; text-align: center; opacity: .88; pointer-events: none; user-select: none; background: rgba(20, 8, 6, .28); text-shadow: 0 1px 0 rgba(0,0,0,.35); z-index: 2; }
+  .stamp span { font-size: clamp(9px, 1.3vw, 12px); letter-spacing: 4px; font-weight: 700; }
+  .stamp b { font-size: clamp(14px, 2.2vw, 22px); letter-spacing: 3px; font-weight: 900; }
+  @media (max-aspect-ratio: 1/1) { .stamp { bottom: clamp(70px, 12vh, 120px); right: 10px; } }
   .tfirst { display: contents; }
   .tfirst.enter .logo { animation: logodrop .75s cubic-bezier(.2,1.5,.4,1) both, bob 3s ease-in-out .75s infinite; }
   .tfirst.enter .tcard { animation: cardrise .5s cubic-bezier(.2,.9,.3,1.2) both; animation-delay: calc(var(--n) * 70ms + 380ms); }
@@ -222,6 +227,8 @@
   .lcard .lchips b:first-child { background: #2f9e62; }
   .lcard .licons { display: flex; gap: 14px; margin-top: 10px; } .lcard .licons div { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; background: rgba(255,255,255,.07); border-radius: 12px; padding: 8px 6px; }
   .lcard .licons svg { width: clamp(40px, 8vw, 64px); } .lcard .licons span { font-size: 13px; font-weight: 700; text-align: center; }
+  .lcard .ltip { display: flex; align-items: baseline; gap: 10px; margin-top: 8px; font-size: clamp(13px, 1.8vw, 16px); font-weight: 600; color: var(--tx1); }
+  .lcard .ltip b { flex: none; font-size: 11px; letter-spacing: 2px; padding: 2px 8px; border-radius: 999px; background: #ffd166; color: #222; }
   .lcard .lphone { display: block; width: min(300px, 70%); margin: 8px 0 0; }
   .lcard .lfoot { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
   .lcard .ldots { display: flex; gap: 6px; } .lcard .ldots i { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,.2); }

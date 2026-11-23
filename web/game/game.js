@@ -70,7 +70,7 @@ if (inStory) applyStop();
 const progress = loadProgress(store);
 const owlUnlocked = () => progress.career.story >= 1; // finishing the story adds Professor Hoot as a playable cat (quick matches)
 const heroCat = () => (S.cat1 < CATS.length ? S.cat1 : 0); // the story, tournament and daily challenge are for the six cats
-if (!owlUnlocked()) { if (S.cat1 >= CATS.length) S.cat1 = 0; if (S.cat2 >= CATS.length) S.cat2 = 1; }
+if (!owlUnlocked() && !inStory) { if (S.cat1 >= CATS.length) S.cat1 = 0; if (S.cat2 >= CATS.length) S.cat2 = 1; } // (the story sets its own rival: the boss is the owl, even before he is unlocked to play)
 menu.setOwl(owlUnlocked());
 try { const furthest = Math.max(0, ...Array.from({ length: CATS.length }, (_, h) => stageOf(store, h))); if (markStops(progress, furthest)) saveProgress(store, progress); } catch { /* no storage */ } // stops cleared before rewards existed still count
 const BALL_COLORS = [0xd8ff3a, 0xff9a2a, 0xff5ca8, 0x3de8ff];

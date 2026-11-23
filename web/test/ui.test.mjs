@@ -38,3 +38,7 @@ test('faces and courts are valid svg in the right colours', () => {
   assert.ok(catFace(CATS[2]).includes('#3a3a46'));
   assert.ok(courtThumb(COURTS.find((c) => c.id === 'clay')).includes('#c8643c'));
 });
+
+test('title page carries the maker stamp', () => {
+  assert.match(renderMenu(createMenu()), /Made by[\s\S]*Captain Kadir/);
+});

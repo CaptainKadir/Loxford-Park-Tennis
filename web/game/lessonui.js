@@ -40,6 +40,7 @@ export function lessonHtml(i, chips = []) {
     <div class="lcard">
       <div class="lhead">${l.arrow ? `<span class="larrow">${ARROW[l.arrow]}</span>` : ''}<h3>${esc(l.title)}</h3><span class="lline">${esc(l.line)}</span></div>
       ${icons}${l.kind === 'emote' ? PHONE_TOP : ''}
+      ${l.tip ? `<div class="ltip"><b>TIP</b><span>${esc(l.tip)}</span></div>` : ''}
       <div class="lchips">${chips.map((c) => `<b>${esc(c)}</b>`).join('')}</div>
       <div class="lfoot"><div class="ldots">${dots}</div><small>${i > 0 ? '&larr; ' : ''}Enter ${last ? '&rarr; practise' : '&rarr;'} &middot; Esc skip</small></div>
     </div>`;

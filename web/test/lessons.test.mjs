@@ -98,3 +98,12 @@ test('a shot ends: it never runs for ever', () => {
   for (let i = 0; i < 2000 && !s.done; i++) stepShot(s, 1 / 60);
   assert.ok(s.done);
 });
+
+test('lessons: the two tips show up on their lessons', () => {
+  const setup = LESSONS.find((l) => l.id === 'setup'), fore = LESSONS.find((l) => l.id === 'forehand');
+  assert.equal(setup.tip, 'If racket is laggy... refresh page on your phone');
+  assert.equal(fore.tip, 'Delay your swing for better contact with the ball');
+  assert.ok(lessonHtml(LESSONS.indexOf(setup)).includes('If racket is laggy... refresh page on your phone'));
+  assert.ok(lessonHtml(LESSONS.indexOf(fore)).includes('Delay your swing for better contact with the ball'));
+  assert.ok(!lessonHtml(LESSONS.indexOf(LESSONS.find((l) => l.id === 'lob'))).includes('class="ltip"')); // other lessons have none
+});

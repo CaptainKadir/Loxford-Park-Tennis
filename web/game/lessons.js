@@ -11,12 +11,12 @@ const holdFor = (id) => { const d = DEMOS[id]; return Math.max(HOLD, shotDuratio
 
 /**
  * kind: 'setup' (no swing), 'swing' (the demos play, one after another, on repeat), 'serve' (the cat's serve),
- * 'emote' (the cat dances).
+ * 'emote' (the cat dances). tip: an optional hint shown under the lesson.
  */
 export const LESSONS = [
-  { id: 'setup', kind: 'setup', title: 'Before you play', line: 'Phone ready?', icons: [['silent', 'Silent off'], ['volume', 'Volume up'], ['flat', 'Calibrate flat']] },
+  { id: 'setup', kind: 'setup', title: 'Before you play', line: 'Phone ready?', icons: [['silent', 'Silent off'], ['volume', 'Volume up'], ['flat', 'Calibrate flat']], tip: 'If racket is laggy... refresh page on your phone' },
   { id: 'grip', kind: 'swing', demos: ['fh-drive'], title: 'Phone = racket', line: 'Top is the head. Screen is the strings.', arrow: 'across' },
-  { id: 'forehand', kind: 'swing', demos: ['fh-drive'], title: 'Forehand', line: 'Back on your right, swing across.', arrow: 'across' },
+  { id: 'forehand', kind: 'swing', demos: ['fh-drive'], title: 'Forehand', line: 'Back on your right, swing across.', arrow: 'across', tip: 'Delay your swing for better contact with the ball' },
   { id: 'backhand', kind: 'swing', demos: ['bh-drive'], title: 'Backhand', line: 'Back on your left, swing across.', arrow: 'across-back' },
   { id: 'topspin', kind: 'swing', demos: ['fh-topspin', 'bh-topspin'], title: 'Topspin', line: 'Low to high. Fast.', arrow: 'up' },
   { id: 'slice', kind: 'swing', demos: ['fh-slice', 'bh-slice'], title: 'Slice', line: 'High to low. Slower.', arrow: 'down' },

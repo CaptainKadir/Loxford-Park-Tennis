@@ -127,6 +127,8 @@ export function pixelMark() {
 }
 const PIXEL_MARK = pixelMark();
 
+// a rubber-stamp credit in the corner of the title page
+const STAMP = '<div class="stamp" aria-label="Made by Captain Kadir"><span>Made by</span><b>Captain Kadir</b></div>';
 const LOGO = `<div class="logo">
 ${PIXEL_MARK}
   <div class="l1">LOXFORD PARK</div><div class="l2"><i></i><span>TENNIS</span><i></i></div></div>`;
@@ -183,7 +185,7 @@ export function renderMenu(menu, extras = {}) {
     const items = menu.titleItems();
     const card = (it, i) => `<button class="mbtn tcard t-${it.id}${i === m.index ? ' sel' : ''}" style="--n:${i}" data-i="${i}">${TITLE_ICONS[it.id] ?? ''}<span>${esc(it.label)}</span>${TITLE_SUB[it.id] ? `<small>${esc(TITLE_SUB[it.id])}</small>` : ''}</button>`;
     // the three ways to play on top, the story as a wide banner, and the rest as a row of smaller cards
-    return `<div class="tfirst${extras.enter ? ' enter' : ''}">${LOGO}<div class="tgrid">${items.map(card).join('')}</div><p class="sethelp">${esc(TITLE_HELP[items[m.index]?.id] ?? '')}</p></div>`
+    return `<div class="tfirst${extras.enter ? ' enter' : ''}">${LOGO}<div class="tgrid">${items.map(card).join('')}</div><p class="sethelp">${esc(TITLE_HELP[items[m.index]?.id] ?? '')}</p>${STAMP}</div>`
       + hint('&larr; &rarr; &uarr; &darr; choose &middot; Enter select &middot; swing the phone to confirm');
   }
   if (m.screen === 'online') {
