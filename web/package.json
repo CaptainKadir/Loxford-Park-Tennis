@@ -1,0 +1,17 @@
+{
+  "name": "loxford-park-tennis-web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "dependencies": {
+    "qrcode-terminal": "^0.12.0",
+    "three": "^0.187.0",
+    "ws": "^8.23.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.65.1"
+  }
+}

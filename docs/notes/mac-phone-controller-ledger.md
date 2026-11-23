@@ -1,0 +1,31 @@
+# Mac phone-controller build: implementation ledger
+
+Kept from the executing-plans run on branch mac-phone-controller (2026-11-18). One line per task or decision.
+
+```
+# SDD ledger — plan: <project folder>/docs/superpowers/plans/2026-11-18-mac-phone-controller.md
+Branch mac-phone-controller (worktree declined by default: in-place branch). Baseline make test: 14832 passed.
+Pre-flight: T1 produces oc_* API; T2,T3 extend wasm_api.c (consume T1); T6 consumes T1 core.js, T4 messages, T5 frame.js; T8 consumes T7 renderer; T9,T10 consume T1 state layout. No conflicts found.
+Task 2 (core part): complete (tests: make test → 14837 passed). Ruling: no MotionSample struct change (positional initialisers + -Werror break); rates in rad/s signalled by slow bit MOTION_RATES_RADS=8 in gyro_raw — costs: slightly hacky, revisit if more phone fields needed. Ruling: Task 2 step 5 (WASM wiring + node swing test) deferred to after Task 1 completes (emcc install pending).
+Task 3 (core part): complete (make test → 14850 passed). Ruling: ShotType has no side in enum (SHOT_DRIVE/TOPSPIN/SLICE/DROP/LOB) and shot_classify(const LabHit*) drops the right_handed param — Reach from player_reach already encodes handedness; names via shot_name(type, side) — cost: none unless side must be known from type alone. WASM exposure of shot deferred to T1.
+Task 1: complete (make -C web test → 3 pass; make test 14850 passed). Ruling: oc_phone_sample takes 11 scalar floats (t,q4,rate3,acc3), not pointers — no malloc needed. Ruling: node test glob test/*.test.mjs (Node 22 rejects bare dir). Task 2 step 5 and Task 3 WASM exposure (shot in state) done in this commit: complete.
+Task 4: complete (node --test relay: 4 pass; server smoke: wasm served 200 application/wasm, path traversal 404). Ruling: cert script falls back to openssl self-signed when mkcert absent (mkcert -install touches the system trust store, so left for the user); iPhone trust step is manual, at phone test time.
+Task 5: complete (node tests: frame 7, sample 3 pass; iPhone manual check pending user). Ruling: phone Record button saves JSON-lines of wire samples (.jsonl), not the older sample CSV — samplecsv has no orientation column; Task 11 converts. Ruling: auto re-centre only corrects drift under 35° while still 2s (gain 0.25), never a full recentre, to avoid snapping when the phone rests.
+Task 6 (partial): Ruling: clocksync keeps mapped time strictly increasing, so it may exceed the lab clock by up to the delivery jitter (tens of ms) — cost: swing timing error of the same size, within STROKE_WINDOW 90 ms.
+Task 6: complete (node tests 30 pass; game page loads in browser pane, HUD renders, no console errors). Task 10 partial: hud.js (labels, points, banners) with tests done here; rally flow banners done; remaining visual HUD polish in T10. Ruling: JS shot labels duplicate core/shot.c wording (tested separately) — cost: drift if one changes; ruling: WASM state exposes shot id + side, labels formatted in JS. Added labT to state (lab clock) so phone time maps to the true lab clock. Added 127.0.0.1:8080 plain-http dev server for the game page.
+Task 7: complete (node tests pass incl. pixel 4; browser pane screenshot: crisp pixels, court/net/lines visible, no console errors apart from fixed ws::1 issue). Ruling: x mirrored via toThree() (camera looks down +z) — racket quaternion must map (w,x,y,z)->(w,x,-y,-z) in Task 8. Ruling: ?nophone URL flag disables pausing for visual dev; local http server also binds ::1 (localhost resolves there in the browser pane).
+Task 8: complete (node tests 40 pass; browser pane: human + CPU cats render and run, racket drawn). Visual polish and phone-driven racket check pending the live iPhone test. Ruling: rig functions tested in core coords; cats built in three space with right side = -x (toThree mirror). Ruling: cat dimensions/colours are first-pass procedural primitives (spec allows). Racket quaternion offset left identity: calibration pose = phone flat pointing at net.
+Task 9: complete (node tests 43 pass; browser screenshot: stands, crowd of cats, banners, umpire chair, both cats; camera from core). Task 10: complete — hud.js (labels, points, banners, shot label near bottom) done in Task 6 with tests; verified in page text overlay.
+Task 11: tooling complete (make test 14861 passed; web tests pass; replay_swing prints speed/face/path/shot for phone CSV). PENDING USER: record labelled swings with the phone, tune core/shot.h thresholds; the shot_phone_recordings_classify test needs those recordings and is deferred. Observation: phone rate 8 rad/s maps to 8.8 m/s racket speed via stroke_params (calibrated for handheld remotes) — thresholds likely need retuning. Task 12: complete except latency measurement on real WiFi (needs the iPhone); README and make -C web play written.
+Final: review by opus (fable unavailable: needs usage credits). Verdict: 3 Critical, 3 Important, 5 Minor.
+Final: fixed C1 racket frame R->core + head axis — rig quatRToCore tests RED→GREEN, suite 55/55 + 14861
+Final: fixed C2 scene mirrored (core is right-handed; player_right=-x) — pixel toThree identity + rig handedness tests RED→GREEN
+Final: fixed C3 out-of-order/duplicate/reload samples — 2 session tests RED→GREEN (reload and half-swing tests passed pre-fix, kept as guards); added oc_phone_reset
+Final: fixed I1 spectator promotion + ws heartbeat — relay promotion test RED→GREEN
+Final: fixed I3 latency includes phone-measured RTT/2 — session + relay tests RED→GREEN
+Final: fixed I2 ?lefty flag (core.init + cat arm) — test passed on first run (no RED: flag plumbing only)
+Final: fixed M1 drift scaled by dt — frame test RED→GREEN; M2 bad URL no longer crashes server — verified by curl (no automated test)
+Final: minor (deferred): M4 pause waits SILENCE_MS=1000 (plan value) — mid-rally 1 s could lose the point first
+Final: minor (deferred): M5 point-over banner only in diagnostic text; "flat drive" label shown as forehand/backhand; Calibrate tap clears spectator message; samples sent before calibration follow compass north
+Final: Ruling: unfixed — Declined-to-judge items need the iPhone (permission await keeps user gesture, iOS socket close on lock, rotationRate axes, self-signed wss) — verified only on the live phone — cost: controller page may need small iOS fixes.
+```

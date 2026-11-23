@@ -1,0 +1,15 @@
+build/
+dist/
+.DS_Store
+.superpowers/
+logs/
+web/build/
+web/node_modules/
+web/certs/
+web/recordings/
+web/tuning.json
+web/mapping.json
+web/tuning.trial.json
+web/mapping.trial.json
+web/tuning.backup.json
+web/tuning.promoted-lob-all.json

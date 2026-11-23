@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kilij: Ottoman Duel</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #1a1208; overflow: hidden; font-family: ui-monospace, Menlo, monospace; }
+  canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; }
+  #hud { position: fixed; left: 0; right: 0; top: 0; display: flex; justify-content: space-between; padding: 12px 16px; color: #f5e3b3; font-weight: 700; text-shadow: 0 2px 0 #000; pointer-events: none; }
+  .bar { width: 38vw; height: 14px; background: rgba(0,0,0,.55); border: 2px solid #c9a24a; }
+  .bar i { display: block; height: 100%; background: #b3261e; width: 100%; transition: width .15s; }
+  #me i { background: #2e7d4f; }
+  #msg { position: fixed; left: 0; right: 0; top: 40%; text-align: center; color: #ffd166; font-size: 34px; font-weight: 800; text-shadow: 0 3px 0 #000; pointer-events: none; white-space: pre; }
+  #foot { position: fixed; left: 0; right: 0; bottom: 8px; text-align: center; color: #cbb98a; font-size: 12px; opacity: .85; pointer-events: none; }
+  #flash { position: fixed; inset: 0; background: #b3261e; opacity: 0; pointer-events: none; transition: opacity .25s; }
+  #dot { position: fixed; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; border: 2px solid #fff; background: rgba(255,255,255,.25); pointer-events: none; }
+  #dot.fast { background: #ffd166; border-color: #ffd166; box-shadow: 0 0 12px #ffd166; }
+  #feelBtn { position: fixed; right: 10px; bottom: 28px; background: rgba(0,0,0,.6); color: #f5e3b3; border: 2px solid #c9a24a; padding: 6px 12px; font: 700 13px inherit; cursor: pointer; }
+  #feel { position: fixed; right: 10px; bottom: 66px; width: 300px; background: rgba(15,10,4,.9); border: 2px solid #c9a24a; color: #f5e3b3; padding: 10px 12px; font-size: 12px; display: none; }
+  #feel.open { display: block; }
+  #feel .row { display: grid; grid-template-columns: 92px 1fr 40px; gap: 6px; align-items: center; margin: 5px 0; }
+  #feel input { width: 100%; }
+  #read { white-space: pre; line-height: 1.5; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid #5a4a2a; }
+  #meter { height: 10px; background: #2a2010; margin: 4px 0 8px; position: relative; }
+  #meter i { display: block; height: 100%; background: #6aa84f; width: 0; }
+  #meter b { position: absolute; top: -2px; bottom: -2px; width: 2px; background: #ffd166; }
+  #feel button { margin-right: 6px; background: #3a2c12; color: #f5e3b3; border: 1px solid #c9a24a; padding: 3px 8px; font: inherit; cursor: pointer; }
+</style>
+</head>
+<body>
+<div id="hud"><div><div>YOU</div><div class="bar" id="me"><i></i></div></div><div style="text-align:right"><div id="ename">ENEMY</div><div class="bar" id="en"><i></i></div></div></div>
+<div id="msg"></div>
+<div id="flash"></div>
+<div id="dot"></div>
+<button id="feelBtn">Feel (F)</button>
+<div id="feel"><div id="read"></div><div id="meter"><i></i><b></b></div><div id="sliders"></div><button id="reset">Reset</button><button id="copy">Copy values</button></div>
+<div id="foot"></div>
+<script type="importmap">{ "imports": { "three": "/vendor/three/build/three.module.js" } }</script>
+<script type="module" src="/sword/game.js"></script>
+</body>
+</html>
